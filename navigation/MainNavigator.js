@@ -1,7 +1,8 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import Landing from "../components/auth/Landing";
+import Landing from "../screens/auth/Landing";
+import Register from "../screens/auth/Register";
 
 function MainNavigator(props) {
   const Stack = createStackNavigator();
@@ -14,6 +15,7 @@ function MainNavigator(props) {
           component={Landing}
           options={{ headerShown: false }}
         />
+        <Stack.Screen name="Register" component={Register} />
       </Stack.Navigator>
     </NavigationContainer>
   );
