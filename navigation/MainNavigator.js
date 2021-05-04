@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Landing from "../screens/auth/Landing";
 import Register from "../screens/auth/Register";
+import Login from "../screens/auth/Login";
 
 function MainNavigator(props) {
   const Stack = createStackNavigator();
@@ -16,6 +17,7 @@ function MainNavigator(props) {
           options={{ headerShown: false }}
         />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="Login" component={Login} />
       </Stack.Navigator>
     </NavigationContainer>
   );
