@@ -2,6 +2,13 @@ import React, { Component } from "react";
 import MainNavigator from "./navigation/MainNavigator";
 import { View, Text } from "react-native";
 import { firebase } from "./firebase";
+import { Provider } from "react-redux";
+import { applyMiddleware, createStore } from "redux";
+import rootReducers from "./redux/reducers";
+import thunk from "redux-thunk";
+import Main from "./screens/Main";
+
+const store = createStore(rootReducers, applyMiddleware(thunk));
 
 export default class App extends Component {
   constructor(props) {
@@ -39,9 +46,9 @@ export default class App extends Component {
       return <MainNavigator />;
     }
     return (
-      <View>
-        <Text>Logged In</Text>
-      </View>
+      <Provider store={store}>
+        <Main />
+      </Provider>
     );
   }
 }
