@@ -1,25 +1,38 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, SafeAreaView } from "react-native";
+import firebase from "firebase";
 
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { fetchUser } from "../redux/actions/index";
 
-class Main extends Component {
+export class Main extends Component {
   componentDidMount() {
     this.props.fetchUser();
   }
   render() {
+    const { currentUser } = this.props;
+    console.log(currentUser);
+    if (currentUser == undefined) {
+      return (
+        <SafeAreaView>
+          <Text>No users found</Text>
+        </SafeAreaView>
+      );
+    }
+
     return (
-      <View>
-        <Text>Logged In!</Text>
-      </View>
+      <SafeAreaView>
+        <Text>{currentUser.name} is Logged In!</Text>
+      </SafeAreaView>
     );
   }
 }
 
-const mapDispatchToProps = (dispatch) =>
+const mapStateToProps = (store) => ({
+  currentUser: store.userState.currentUser,
+});
+const mapDispatchProps = (dispatch) =>
   bindActionCreators({ fetchUser }, dispatch);
 
-export default connect(null, mapDispatchToProps)(Main);
+export default connect(mapStateToProps, mapDispatchProps)(Main);
