@@ -10,6 +10,7 @@ import Main from "./screens/Main";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Add from "./screens/main/Add";
+import Save from "./screens/main/Save";
 
 const store = createStore(rootReducers, applyMiddleware(thunk));
 const Stack = createStackNavigator();
@@ -58,7 +59,16 @@ export default class App extends Component {
               component={Main}
               options={{ headerShown: false }}
             />
-            <Stack.Screen name="Add" component={Add} />
+            <Stack.Screen
+              name="Add"
+              component={Add}
+              navigation={this.props.navigation}
+            />
+            <Stack.Screen
+              name="Save"
+              component={Save}
+              navigation={this.props.navigation}
+            />
           </Stack.Navigator>
         </NavigationContainer>
       </Provider>
