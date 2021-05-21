@@ -1,30 +1,64 @@
 import React, { Component } from "react";
-import { Text, SafeAreaView } from "react-native";
-import firebase from "firebase";
-
+import { Text, SafeAreaView, StyleSheet } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { fetchUser } from "../redux/actions/index";
+import Feed from "./main/Feed";
+import Profile from "./main/Profile";
+
+const Tab = createBottomTabNavigator();
+const EmptyScreen = () => {
+  return null;
+};
 
 export class Main extends Component {
   componentDidMount() {
     this.props.fetchUser();
   }
   render() {
-    const { currentUser } = this.props;
-    console.log(currentUser);
-    if (currentUser == undefined) {
-      return (
-        <SafeAreaView>
-          <Text>No users found</Text>
-        </SafeAreaView>
-      );
-    }
-
     return (
-      <SafeAreaView>
-        <Text>{currentUser.name} is Logged In!</Text>
-      </SafeAreaView>
+      <Tab.Navigator initialRouteName="Feed">
+        <Tab.Screen
+          name="Feed"
+          component={Feed}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="home" color={color} size={26} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="MainAdd"
+          component={EmptyScreen}
+          listeners={({ navigation }) => ({
+            tabPress: (event) => {
+              event.preventDefault();
+              navigation.navigate("Add");
+            },
+          })}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon
+                name="plus-circle"
+                color={color}
+                size={26}
+                style={styles.addButton}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="account" color={color} size={26} />
+            ),
+          }}
+        />
+      </Tab.Navigator>
     );
   }
 }
@@ -34,5 +68,7 @@ const mapStateToProps = (store) => ({
 });
 const mapDispatchProps = (dispatch) =>
   bindActionCreators({ fetchUser }, dispatch);
+
+const styles = StyleSheet.create({});
 
 export default connect(mapStateToProps, mapDispatchProps)(Main);

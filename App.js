@@ -7,8 +7,12 @@ import { applyMiddleware, createStore } from "redux";
 import rootReducers from "./redux/reducers";
 import thunk from "redux-thunk";
 import Main from "./screens/Main";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import Add from "./screens/main/Add";
 
 const store = createStore(rootReducers, applyMiddleware(thunk));
+const Stack = createStackNavigator();
 
 export default class App extends Component {
   constructor(props) {
@@ -47,7 +51,16 @@ export default class App extends Component {
     }
     return (
       <Provider store={store}>
-        <Main />
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Main" mode="modal">
+            <Stack.Screen
+              name="Main"
+              component={Main}
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="Add" component={Add} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </Provider>
     );
   }
