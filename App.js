@@ -25,7 +25,7 @@ export default class App extends Component {
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged((user) => {
-      if (!user) {
+      if (!user || user === "undefined") {
         this.setState({
           loggedIn: false,
           loaded: true,

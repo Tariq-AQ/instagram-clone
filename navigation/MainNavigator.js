@@ -23,4 +23,5 @@ function MainNavigator(props) {
   );
 }
 
+
 export default MainNavigator;
