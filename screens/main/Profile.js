@@ -7,23 +7,25 @@ import { connect } from "react-redux";
    const {currentUser, posts} = props;
    console.log({currentUser, posts});
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.infoContainer}>
       <Text>
         {currentUser.name}
          </Text>
       <Text>
         {currentUser.email}
          </Text>
-         <View>
+         <View style={styles.containerGallery}>
            <FlatList
            numColumns={3}
            horizontal={false}
            data={posts}
            renderItem={({item}) => (
+             <View  style={styles.imageContainer}>
              <Image
              style={styles.image} 
              source={{uri: item.downloadURL}}
              />
+             </View>
            )}
            ></FlatList>
          </View>
@@ -33,6 +35,16 @@ import { connect } from "react-redux";
 }
 
 const styles = StyleSheet.create({
+  infoContainer:{
+    margin:10
+    
+  },
+  containerGallery:{
+
+  },
+  imageContainer:{
+flex: 1/3
+  },
   image:{
     flex:1,
     aspectRatio: 1/1,
