@@ -75,6 +75,10 @@ if(props.following.indexOf(props.route.params.uid)> -1){
     
   }
 
+  const onLogout =()=>{
+    firebase.auth().signOut();
+  }
+
 
 
   if (user === null) {
@@ -85,7 +89,7 @@ if(props.following.indexOf(props.route.params.uid)> -1){
   return (
     <SafeAreaView style={styles.infoContainer}>
       <View>
-      <Text>
+      <Text style={styles.name}>
         {user.name}
          </Text>
       <Text>
@@ -103,7 +107,8 @@ if(props.following.indexOf(props.route.params.uid)> -1){
           onPress={() =>onFollow()}/>
           )}
         </View>
-      ) : null}
+      ) : <Button title="Logout"
+          onPress={() =>onLogout()}/> }
       
          <View style={styles.containerGallery}>
            <FlatList
@@ -131,7 +136,7 @@ const styles = StyleSheet.create({
     
   },
   containerGallery:{
-
+    height: "100%"
   },
   imageContainer:{
 flex: 1/3
@@ -139,6 +144,11 @@ flex: 1/3
   image:{
     flex:1,
     aspectRatio: 1/1,
+    margin: 1.5,
+  },
+  name:{
+    fontWeight: "bold",
+    marginTop: 30,
   }
 })
 const mapStateToProps = (store) => ({

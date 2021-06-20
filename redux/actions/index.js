@@ -1,4 +1,4 @@
-import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE} from "../constants";
+import { USER_STATE_CHANGE, USER_POSTS_STATE_CHANGE, USER_FOLLOWING_STATE_CHANGE } from "../constants";
 import firebase from "firebase";
 
 export function fetchUser() {
@@ -12,8 +12,9 @@ export function fetchUser() {
         if (snapshot.exists) {
           dispatch({ type: USER_STATE_CHANGE, currentUser: snapshot.data() });
         } else {
-         
-          console.log("snapshot does not exist");
+
+          console.log("User does not exist");
+          firebase.auth().signOut();
         }
       });
   };
@@ -31,16 +32,18 @@ export function fetchUserPosts() {
       .orderBy("creation", "asc")
       .get()
       .then((snapshot) => {
+
         let posts = snapshot.docs.map(doc => {
           const data = doc.data();
           const id = doc.id;
-          return{id, ...data}
+          return { id, ...data }
         })
-       console.log(posts);
-       dispatch({ type: USER_POSTS_STATE_CHANGE, posts});
+        console.log(posts);
+        dispatch({ type: USER_POSTS_STATE_CHANGE, posts });
+
 
       });
-  };
+  }
 }
 
 export function fetchUserFollowing() {
@@ -55,8 +58,31 @@ export function fetchUserFollowing() {
           const id = doc.id;
           return id
         })
-       dispatch({ type: USER_FOLLOWING_STATE_CHANGE, following});
+        dispatch({ type: USER_FOLLOWING_STATE_CHANGE, following });
 
       });
   };
+}
+
+
+export function fetchUsersData(udid) {
+  return ((dispatch, getState) => {
+    const found = getState().usersState.users.some(el => el.uid === uid);
+
+    if (!found) {
+      firebase
+        .firestore()
+        .collection("users")
+        .doc(uid)
+        .get()
+        .then((snapshot) => {
+          if (snapshot.exists) {
+            dispatch({ type: USER_STATE_CHANGE, currentUser: snapshot.data() });
+          } else {
+
+            console.log("User data does not exist");
+          }
+        });
+    }
+  })
 }

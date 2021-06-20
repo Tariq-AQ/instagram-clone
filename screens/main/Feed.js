@@ -1,10 +1,9 @@
 import React from "react";
-import { SafeAreaView, Text } from "react-native";
+import { SafeAreaView, Text, FlatList } from "react-native";
 
-export default function Feed() {
+export default function Feed(props) {
   return (
     <SafeAreaView>
-      <Text>Feed</Text>
     </SafeAreaView>
   );
 }

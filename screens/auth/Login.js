@@ -25,17 +25,17 @@ export class Login extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput
+      <View style={styles.container}>
+        <TextInput style={styles.email}
           placeholder="Email"
           onChangeText={(email) => this.setState({ email })}
         />
-        <TextInput
+        <TextInput style={styles.password}
           placeholder="Password"
           onChangeText={(password) => this.setState({ password })}
           secureTextEntry={true}
         />
-        <Button
+        <Button style={styles.button}
           onPress={() => {
             this.onSignIn();
           }}
@@ -46,4 +46,33 @@ export class Login extends Component {
   }
 }
 
+const styles = StyleSheet.create({
+  email:{
+    borderWidth: 1,
+    width: "100%",
+    height: 40,
+    marginVertical: 10,
+    paddingLeft:10,
+    borderRadius: 10,
+    borderColor: 'grey',
+  },
+  password:{
+    borderWidth: 1,
+    width: "100%",
+    height: 40,
+    marginVertical: 10,
+    paddingLeft:10,
+    borderRadius: 10,
+    borderColor: 'grey',
+  },
+  container:{
+    marginVertical:200,
+    width: "80%",
+    justifyContent: 'center',
+    alignSelf: 'center'
+  },
+  button:{
+    borderRadius: 10,
+  }
+});
 export default Login;
